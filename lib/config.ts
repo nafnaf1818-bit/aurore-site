@@ -57,7 +57,7 @@ export const LIVRES = [
     pages: null,
     annee: 2025,
     tags: ["Conte poétique", "Amitié & courage", "Aventure", "Tous âges"],
-    couverture: "++++",
+    couverture: "/couverture3.png",
     stock: 50,
     nouveaute: false,
   },
