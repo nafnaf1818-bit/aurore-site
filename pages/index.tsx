@@ -5,6 +5,7 @@ import { AUTEUR, LIVRES, CREATEURS } from '../lib/config'
 export default function Home() {
   const livresActifs = LIVRES
   const createursActifs = CREATEURS.filter(c => c.actif)
+  const premierLivre = livresActifs[0]
 
   return (
     <>
@@ -46,10 +47,14 @@ export default function Home() {
           <div className="cover-stack">
             <div className="cover-shadow2" />
             <div className="cover-shadow1" />
-            <div className="cover-placeholder">
-              <span>📖</span>
-              <small>La vie n'est qu'illusion</small>
-            </div>
+            {premierLivre?.couverture ? (
+              <img src={premierLivre.couverture} alt={premierLivre.titre} style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'2px'}} />
+            ) : (
+              <div className="cover-placeholder">
+                <span>📖</span>
+                <small>La vie n'est qu'illusion</small>
+              </div>
+            )}
           </div>
           <p className="cover-label">Dernière parution</p>
         </div>
@@ -68,10 +73,14 @@ export default function Home() {
             <div key={livre.id} className="book-item">
               <div className="book-cover-wrap">
                 <span className="book-num">0{i + 1}</span>
-                <div className="book-cover-placeholder">
-                  <span>📖</span>
-                  <small>{livre.titre}</small>
-                </div>
+                {livre.couverture ? (
+                  <img src={livre.couverture} alt={livre.titre} style={{width:'100%',height:'100%',objectFit:'cover'}} />
+                ) : (
+                  <div className="book-cover-placeholder">
+                    <span>📖</span>
+                    <small>{livre.titre}</small>
+                  </div>
+                )}
                 {livre.nouveaute && <span className="book-badge">Nouveauté</span>}
               </div>
               <p className="book-cat">{livre.sousTitre} · {livre.annee}</p>
