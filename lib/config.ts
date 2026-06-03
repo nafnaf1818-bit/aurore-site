@@ -11,7 +11,7 @@ export const AUTEUR = {
   traits: ["Écrivaine", "Motarde", "Authentique", "Bienveillante", "Intense", "Passionnée d'histoire"],
   // Photo : mettre le fichier dans /public/images/ et décommenter la ligne ci-dessous
   // photo: "/images/aurore.jpg",
-  photo: null,
+  photo: "/MOI NIMES.JPG",
   email: "contact@auroremichaud.fr", // À mettre à jour
   facebook: "https://www.facebook.com/lencredesameslibre",
   instagram: "",
@@ -29,7 +29,7 @@ export const LIVRES = [
     pages: 294,
     annee: 2026,
     tags: ["Roman intime", "Émotions", "Paix intérieure", "Nouveauté 2026"],
-    couverture: "/images/couverture-vie-illusion.jpg",
+    couverture: "/couverture-vie-illusion.png",
     stock: 50, // Mettre à jour selon ton stock
     nouveaute: true,
   },
