@@ -27,7 +27,7 @@ export const LIVRES = [
     pages: 294,
     annee: 2026,
     tags: ["Roman intime", "Émotions", "Paix intérieure", "Nouveauté 2026"],
-    couverture: "/couverture1.png",
+    couverture: /couverture4.png",
     stock: 50,
     nouveaute: true,
   },
@@ -142,3 +142,4 @@ export const BOUTIQUE = {
   conditionsRetour: "Retour accepté sous 14 jours après réception. Livre en état neuf.",
   delaiTraitement: "1-2 jours ouvrés pour la préparation de votre commande.",
 }
+
