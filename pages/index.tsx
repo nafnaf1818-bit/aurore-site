@@ -48,7 +48,7 @@ export default function Home() {
             <div className="cover-shadow2" />
             <div className="cover-shadow1" />
             {true ? (
-              <img src="/couverture4.png alt={premierLivre.titre} style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'2px'}} />
+              <img src=/couverture4.png alt={premierLivre.titre} style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'2px'}} />
             ) : (
               <div className="cover-placeholder">
                 <span>📖</span>
@@ -178,4 +178,5 @@ export default function Home() {
     </>
   )
 }
+
 
