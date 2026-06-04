@@ -27,7 +27,7 @@ export const LIVRES = [
     pages: 294,
     annee: 2026,
     tags: ["Roman intime", "Émotions", "Paix intérieure", "Nouveauté 2026"],
-    couverture: /couverture4.png",
+    couverture: "/couverture4.png",
     stock: 50,
     nouveaute: true,
   },
