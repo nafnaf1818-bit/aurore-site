@@ -41,7 +41,7 @@ export const LIVRES = [
     pages: null,
     annee: 2024,
     tags: ["Conte poétique", "Découverte de soi", "Magie & aventure", "Tous âges"],
-    couverture: "/couverture3.png",
+    couverture: "/couverture2.png",
     stock: 50,
     nouveaute: false,
   },
@@ -55,7 +55,7 @@ export const LIVRES = [
     pages: null,
     annee: 2025,
     tags: ["Conte poétique", "Amitié & courage", "Aventure", "Tous âges"],
-    couverture: "/couverture2.png",
+    couverture: "/couverture3.png",
     stock: 50,
     nouveaute: false,
   },
@@ -94,51 +94,4 @@ export const TRANSPORTEURS = [
     url_suivi: "https://www.chronopost.fr/fr/suivi-envoi",
   },
   {
-    id: "mondial-relay",
-    nom: "Mondial Relay",
-    logo: "🏪",
-    delai: "4-6 jours ouvrés",
-    prix: { livres1: 3.49, livres2: 4.49, livresPlus: 5.49 },
-    suivi: true,
-    description: "Retrait en point relais près de chez vous",
-    url_suivi: "https://www.mondialrelay.fr/suivi-de-colis",
-  },
-  {
-    id: "ups",
-    nom: "UPS Standard",
-    logo: "🟫",
-    delai: "3-5 jours ouvrés",
-    prix: { livres1: 8.99, livres2: 9.99, livresPlus: 10.99 },
-    suivi: true,
-    description: "Livraison internationale disponible",
-    url_suivi: "https://www.ups.com/track",
-  },
-  {
-    id: "retrait",
-    nom: "Retrait direct / Dédicace",
-    logo: "🤝",
-    delai: "Sur rendez-vous",
-    prix: { livres1: 0, livres2: 0, livresPlus: 0 },
-    suivi: false,
-    description: "Récupérer votre livre en main propre avec une dédicace personnalisée",
-    url_suivi: null,
-  },
-]
-
-export const CREATEURS = [
-  {
-    id: "createur-1",
-    nom: "Nom du créateur",
-    description: "Description courte de leur activité ou projet",
-    lien: "https://...",
-    image: null,
-    actif: false,
-  },
-]
-
-export const BOUTIQUE = {
-  fraisPortGratuit: 50,
-  mentionsLegales: "Aurore Michaud — Éditeur indépendant — France",
-  conditionsRetour: "Retour accepté sous 14 jours après réception. Livre en état neuf.",
-  delaiTraitement: "1-2 jours ouvrés pour la préparation de votre commande.",
-}
+    id: "mondial-relay
