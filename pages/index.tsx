@@ -19,7 +19,7 @@ export default function Home() {
         <meta property="og:url" content="https://auroremichaud.com/" />
         <meta property="og:title" content="Aurore Michaud — L'encre des Âmes Libres" />
         <meta property="og:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent. Commandez directement sur le site." />
-        <meta property="og:image" content="https://auroremichaud.com/couverture4.png" />
+        <meta property="og:image" content="https://auroremichaud.com/og-banner.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
@@ -29,7 +29,7 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Aurore Michaud — L'encre des Âmes Libres" />
         <meta name="twitter:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent." />
-        <meta name="twitter:image" content="https://auroremichaud.com/couverture4.png" />
+        <meta name="twitter:image" content="https://auroremichaud.com/og-banner.png" />
 
         {/* Données structurées Google */}
         <script
