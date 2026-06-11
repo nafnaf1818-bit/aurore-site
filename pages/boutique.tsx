@@ -84,8 +84,57 @@ export default function Boutique() {
 
   return (
     <>
-      <Head>
-        <title>Boutique — Aurore Michaud</title>
+    <Head>
+        <title>Boutique — Les livres d'Aurore Michaud | Commande directe</title>
+        <meta name="description" content="Commandez les livres d'Aurore Michaud en direct : romans intenses et contes poétiques. Livraison en France et à l'international, dédicace personnalisée possible." />
+        <link rel="canonical" href="https://auroremichaud.com/boutique" />
+
+        {/* Open Graph (Facebook) */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://auroremichaud.com/boutique" />
+        <meta property="og:title" content="Boutique — Les livres d'Aurore Michaud" />
+        <meta property="og:description" content="Commandez en direct, avec dédicace personnalisée possible. Livraison en France et à l'international." />
+        <meta property="og:image" content="https://auroremichaud.com/og-banner.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Aurore Michaud" />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Boutique — Les livres d'Aurore Michaud" />
+        <meta name="twitter:description" content="Commandez en direct, avec dédicace personnalisée possible." />
+        <meta name="twitter:image" content="https://auroremichaud.com/og-banner.png" />
+
+        {/* Données structurées Google : les livres avec leur prix */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": LIVRES.map((livre, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "item": {
+                "@type": "Book",
+                "name": livre.titre,
+                "description": livre.description,
+                "author": { "@type": "Person", "name": "Aurore Michaud" },
+                "image": livre.couverture ? `https://auroremichaud.com${livre.couverture}` : undefined,
+                "numberOfPages": livre.pages || undefined,
+                "inLanguage": "fr",
+                "offers": {
+                  "@type": "Offer",
+                  "price": livre.prix.toFixed(2),
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock",
+                  "url": `https://auroremichaud.com/boutique?livre=${livre.id}`
+                }
+              }
+            }))
+          }) }}
+        />
+
         <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
       </Head>
 
