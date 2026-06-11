@@ -116,7 +116,7 @@ export default function Boutique() {
               "@type": "ListItem",
               "position": i + 1,
               "item": {
-                "@type": "Book",
+                "@type": ["Book", "Product"],
                 "name": livre.titre,
                 "description": livre.description,
                 "author": { "@type": "Person", "name": "Aurore Michaud" },

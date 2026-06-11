@@ -11,7 +11,7 @@ export const AUTEUR = {
   traits: ["Écrivaine", "Motarde", "Authentique", "Bienveillante", "Intense", "Passionnée d'histoire"],
   photo: "/aurore.jpg",
   email: "contact@auroremichaud.fr",
-  facebook: "https://www.facebook.com/lencredesameslibre",
+facebook: "https://www.facebook.com/profile.php?id=61590141702563",
   instagram: "",
   tiktok: "",
 }
