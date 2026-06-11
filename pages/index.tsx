@@ -9,11 +9,41 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Aurore Michaud — L'encre des Âmes Libres</title>
-        <meta name="description" content="Des mots qui brûlent. Des récits qui réparent. Des âmes qui se reconnaissent. Découvrez les livres d'Aurore Michaud." />
+<Head>
+        <title>Aurore Michaud — L'encre des Âmes Libres | Auteure</title>
+        <meta name="description" content="Des mots qui brûlent. Des récits qui réparent. Des âmes qui se reconnaissent. Découvrez les livres d'Aurore Michaud : romans intenses et contes poétiques." />
+        <link rel="canonical" href="https://auroremichaud.com/" />
+
+        {/* Open Graph (Facebook) */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://auroremichaud.com/" />
         <meta property="og:title" content="Aurore Michaud — L'encre des Âmes Libres" />
-        <meta property="og:description" content="Romans intenses, contes poétiques. Commander sur ce site ou sur coollibri.com" />
+        <meta property="og:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent. Commandez directement sur le site." />
+        <meta property="og:image" content="https://auroremichaud.com/couverture4.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Aurore Michaud" />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Aurore Michaud — L'encre des Âmes Libres" />
+        <meta name="twitter:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent." />
+        <meta name="twitter:image" content="https://auroremichaud.com/couverture4.png" />
+
+        {/* Données structurées Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Aurore Michaud",
+            "url": "https://auroremichaud.com",
+            "jobTitle": "Auteure",
+            "sameAs": [AUTEUR.facebook]
+          }) }}
+        />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
       </Head>
