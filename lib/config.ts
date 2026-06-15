@@ -7,7 +7,7 @@ export const AUTEUR = {
   nom: "Aurore Michaud",
   tagline: "L'encre des Âmes Libres",
   description: "Des mots qui brûlent. Des récits qui réparent. Des âmes qui se reconnaissent.",
-  bio: "Romans intenses, authentiques et remplis d'émotions. Histoire, généalogie, destins de femmes, passions et liberté — chaque livre porte une vérité qui touche au plus profond.",
+  bio: "Auteure indépendante depuis 1988, Aurore Michaud publie sous la marque L'encre des Âmes Libres. Elle a signé trois romans : La vie n'est qu'illusion, Le Voyage Secret de Greynawelle et Le Voyage Secret de Priam, disponibles sur Coollibri.",
   traits: ["Écrivaine", "Motarde", "Authentique", "Bienveillante", "Intense", "Passionnée d'histoire"],
   photo: "/aurore.jpg",
   email: "aurore.michaud@ikmail.com",
@@ -30,6 +30,8 @@ export const LIVRES = [
     couverture: "/couverture1.png",
     stock: 50,
     nouveaute: true,
+    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
+    lienCoollibri: "https://www.coollibri.com/",
   },
   {
     id: "greynawelle",
@@ -44,6 +46,8 @@ export const LIVRES = [
     couverture: "/couverture2.png",
     stock: 50,
     nouveaute: false,
+    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
+    lienCoollibri: "https://www.coollibri.com/",
   },
   {
     id: "priam",
@@ -58,70 +62,8 @@ export const LIVRES = [
     couverture: "/couverture3.png",
     stock: 50,
     nouveaute: false,
-  },
-]
-
-export const TRANSPORTEURS = [
-  {
-    id: "la-poste-lettre",
-    nom: "La Poste — Lettre Suivie",
-    logo: "📮",
-    delai: "3-5 jours ouvrés",
-    prix: { livres1: 3.99, livres2: 4.99, livresPlus: 5.99 },
-    suivi: true,
-    description: "Livraison standard avec numéro de suivi",
-    url_suivi: "https://www.laposte.fr/outils/suivre-vos-envois",
-  },
-  {
-    id: "la-poste-colissimo",
-    nom: "Colissimo",
-    logo: "📦",
-    delai: "2-3 jours ouvrés",
-    prix: { livres1: 6.99, livres2: 7.99, livresPlus: 8.99 },
-    suivi: true,
-    description: "Livraison rapide à domicile ou en point relais",
-    url_suivi: "https://www.laposte.fr/outils/suivre-vos-envois",
-    recommande: true,
-  },
-  {
-    id: "chronopost",
-    nom: "Chronopost",
-    logo: "⚡",
-    delai: "24h",
-    prix: { livres1: 12.99, livres2: 13.99, livresPlus: 14.99 },
-    suivi: true,
-    description: "Livraison express le lendemain avant 13h",
-    url_suivi: "https://www.chronopost.fr/fr/suivi-envoi",
-  },
-  {
-    id: "mondial-relay",
-    nom: "Mondial Relay",
-    logo: "🏪",
-    delai: "4-6 jours ouvrés",
-    prix: { livres1: 3.49, livres2: 4.49, livresPlus: 5.49 },
-    suivi: true,
-    description: "Retrait en point relais près de chez vous",
-    url_suivi: "https://www.mondialrelay.fr/suivi-de-colis",
-  },
-  {
-    id: "ups",
-    nom: "UPS Standard",
-    logo: "🟫",
-    delai: "3-5 jours ouvrés",
-    prix: { livres1: 8.99, livres2: 9.99, livresPlus: 10.99 },
-    suivi: true,
-    description: "Livraison internationale disponible",
-    url_suivi: "https://www.ups.com/track",
-  },
-  {
-    id: "retrait",
-    nom: "Retrait direct / Dédicace",
-    logo: "🤝",
-    delai: "Sur rendez-vous",
-    prix: { livres1: 0, livres2: 0, livresPlus: 0 },
-    suivi: false,
-    description: "Récupérer votre livre en main propre avec une dédicace personnalisée",
-    url_suivi: null,
+    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
+    lienCoollibri: "https://www.coollibri.com/",
   },
 ]
 
@@ -136,10 +78,4 @@ export const CREATEURS = [
   },
 ]
 
-export const BOUTIQUE = {
-  fraisPortGratuit: 50,
-  mentionsLegales: "Aurore Michaud — Éditeur indépendant — France",
-  conditionsRetour: "Retour accepté sous 14 jours après réception. Livre en état neuf.",
-  delaiTraitement: "1-2 jours ouvrés pour la préparation de votre commande.",
-}
 

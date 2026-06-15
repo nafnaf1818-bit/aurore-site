@@ -18,7 +18,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://auroremichaud.com/" />
         <meta property="og:title" content="Aurore Michaud — L'encre des Âmes Libres" />
-        <meta property="og:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent. Commandez directement sur le site." />
+        <meta property="og:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent. Disponibles sur Coollibri." />
         <meta property="og:image" content="https://auroremichaud.com/og-banner.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -79,7 +79,7 @@ export default function Home() {
           </div>
           <p className="hero-sub">Un livre pour comprendre, se reconnecter<br />et choisir la paix intérieure · 294 pages</p>
           <div className="btn-row">
-            <Link href="/boutique" className="btn-dark">Commander — 29,90 €</Link>
+            <a href={premierLivre.lienCoollibri} target="_blank" rel="noopener noreferrer" className="btn-dark">Acheter — {premierLivre.prix.toFixed(2).replace('.', ',')} €</a>
             <a href="#livres" className="btn-outline">Tous les livres</a>
           </div>
         </div>
@@ -129,9 +129,9 @@ export default function Home() {
                   {livre.prix.toFixed(2).replace('.', ',')} €
                   {livre.pages && <small>{livre.pages} pages</small>}
                 </div>
-                <Link href={`/boutique?livre=${livre.id}`} className="book-order">
-                  Commander →
-                </Link>
+                <a href={livre.lienCoollibri} target="_blank" rel="noopener noreferrer" className="book-order">
+                  Acheter sur Coollibri →
+                </a>
               </div>
             </div>
           ))}
@@ -210,7 +210,6 @@ export default function Home() {
           {AUTEUR.instagram && <a href={AUTEUR.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
           <Link href="/mentions-legales">Mentions légales</Link>
           <Link href="/cgv">CGV</Link>
-          <Link href="/admin">Admin</Link>
         </div>
       </footer>
     </>
