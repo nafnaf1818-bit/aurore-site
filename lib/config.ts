@@ -30,8 +30,7 @@ export const LIVRES = [
     couverture: "/couverture1.png",
     stock: 50,
     nouveaute: true,
-    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
-    lienCoollibri: "https://www.coollibri.com/",
+    lienCoollibri: "https://www.coollibri.com/bibliotheque-en-ligne/aurore-michaud/la-vie-nest-quillusion_1555918",
   },
   {
     id: "greynawelle",
@@ -46,8 +45,7 @@ export const LIVRES = [
     couverture: "/couverture2.png",
     stock: 50,
     nouveaute: false,
-    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
-    lienCoollibri: "https://www.coollibri.com/",
+    lienCoollibri: "https://www.coollibri.com/bibliotheque-en-ligne/aurore-michaud/le-voyage-secret-de-greynawelle_1560372",
   },
   {
     id: "priam",
@@ -62,8 +60,7 @@ export const LIVRES = [
     couverture: "/couverture3.png",
     stock: 50,
     nouveaute: false,
-    // [À COMPLÉTER] : lien direct vers la fiche du livre sur Coollibri
-    lienCoollibri: "https://www.coollibri.com/",
+    lienCoollibri: "https://www.coollibri.com/bibliotheque-en-ligne/aurore-michaud/le-voyage-secret-de-priam_1568729",
   },
 ]
 
