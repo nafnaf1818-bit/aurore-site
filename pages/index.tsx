@@ -14,9 +14,6 @@ export default function Home() {
     <Head>
         <title>Aurore Michaud — L'encre des Âmes Libres | Auteure</title>
         <meta name="description" content="Des mots qui brûlent. Des récits qui réparent. Des âmes qui se reconnaissent. Découvrez les livres d'Aurore Michaud : romans intenses et contes poétiques." />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="canonical" href="https://auroremichaud.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://auroremichaud.com/" />
