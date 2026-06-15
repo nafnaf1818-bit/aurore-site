@@ -4,9 +4,7 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" href="/logo-dauphin.png" />
       </Head>
       <body>
         <Main />
