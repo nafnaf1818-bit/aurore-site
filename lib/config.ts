@@ -10,9 +10,9 @@ export const AUTEUR = {
   bio: "Romans intenses, authentiques et remplis d'émotions. Histoire, généalogie, destins de femmes, passions et liberté — chaque livre porte une vérité qui touche au plus profond.",
   traits: ["Écrivaine", "Motarde", "Authentique", "Bienveillante", "Intense", "Passionnée d'histoire"],
   photo: "/aurore.jpg",
-  email: "contact@auroremichaud.fr",
+  email: "aurore.michaud@ikmail.com",
 facebook: "https://www.facebook.com/profile.php?id=61590141702563",
-  instagram: "",
+  instagram: "https://www.instagram.com/nafnaf181733",
   tiktok: "",
 }
 

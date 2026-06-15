@@ -275,7 +275,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--creme); color: var(
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; gap: 2rem; min-height: auto; }
-  .hero-right { display: none; }
+  .hero-right { display: flex; }
   .books-grid { grid-template-columns: 1fr; }
   .about-inner { grid-template-columns: 1fr; gap: 2rem; }
   .about-photo, .about-photo-placeholder { max-width: 200px; }

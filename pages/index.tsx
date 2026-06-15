@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { AUTEUR, LIVRES, CREATEURS } from '../lib/config'
@@ -6,15 +7,14 @@ export default function Home() {
   const livresActifs = LIVRES
   const createursActifs = CREATEURS.filter(c => c.actif)
   const premierLivre = livresActifs[0]
+  const [lightbox, setLightbox] = useState<{src: string, zoom: number} | null>(null)
 
   return (
     <>
-<Head>
+    <Head>
         <title>Aurore Michaud — L'encre des Âmes Libres | Auteure</title>
         <meta name="description" content="Des mots qui brûlent. Des récits qui réparent. Des âmes qui se reconnaissent. Découvrez les livres d'Aurore Michaud : romans intenses et contes poétiques." />
         <link rel="canonical" href="https://auroremichaud.com/" />
-
-        {/* Open Graph (Facebook) */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://auroremichaud.com/" />
         <meta property="og:title" content="Aurore Michaud — L'encre des Âmes Libres" />
@@ -24,14 +24,10 @@ export default function Home() {
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Aurore Michaud" />
-
-        {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Aurore Michaud — L'encre des Âmes Libres" />
         <meta name="twitter:description" content="Romans intenses, contes poétiques. Des mots qui brûlent, des récits qui réparent." />
         <meta name="twitter:image" content="https://auroremichaud.com/og-banner.png" />
-
-        {/* Données structurées Google */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -43,10 +39,24 @@ export default function Home() {
             "sameAs": [AUTEUR.facebook]
           }) }}
         />
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
       </Head>
+
+      {/* LIGHTBOX */}
+      {lightbox && (
+        <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div onClick={e => e.stopPropagation()} style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <img src={lightbox.src} style={{ maxHeight: '70vh', maxWidth: '80vw', transform: `scale(${lightbox.zoom})`, transformOrigin: 'center', transition: 'transform 0.2s', borderRadius: '4px', display: 'block' }} />
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', position: 'relative', zIndex: 10 }}>
+              <button onClick={() => setLightbox({ ...lightbox, zoom: Math.max(0.5, lightbox.zoom - 0.25) })} style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', width: '36px', height: '36px', fontSize: '1.2rem', cursor: 'pointer', borderRadius: '50%' }}>−</button>
+              <span style={{ color: '#fff', fontSize: '0.8rem', minWidth: '40px', textAlign: 'center' }}>{Math.round(lightbox.zoom * 100)}%</span>
+              <button onClick={() => setLightbox({ ...lightbox, zoom: Math.min(6, lightbox.zoom + 0.25) })} style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', width: '36px', height: '36px', fontSize: '1.2rem', cursor: 'pointer', borderRadius: '50%' }}>+</button>
+            </div>
+            <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: '-2.5rem', right: 0, background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}>✕</button>
+          </div>
+        </div>
+      )}
 
       <nav className="nav">
         <span className="nav-logo">Aurore Michaud</span>
@@ -75,10 +85,8 @@ export default function Home() {
         </div>
         <div className="hero-right">
           <div className="cover-stack">
-            <div className="cover-shadow2" />
-            <div className="cover-shadow1" />
             {true ? (
-              <img src="/couverture4.png" alt="Affiche" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'2px'}} />
+              <img src="/affiche-ames-libres.jpg" alt="L'encre des Âmes Libres — les livres d'Aurore Michaud" style={{width:'100%',height:'auto',display:'block',borderRadius:'2px', cursor:'zoom-in'}} onClick={() => setLightbox({ src: '/affiche-ames-libres.jpg', zoom: 1 })} />
             ) : (
               <div className="cover-placeholder">
                 <span>📖</span>
@@ -104,7 +112,7 @@ export default function Home() {
               <div className="book-cover-wrap">
                 <span className="book-num">0{i + 1}</span>
                 {livre.couverture ? (
-                  <img src={livre.couverture} alt={livre.titre} style={{width:'100%',height:'100%',objectFit:'cover'}} />
+                  <img src={livre.couverture} alt={livre.titre} style={{width:'100%',height:'100%',objectFit:'cover', cursor:'zoom-in'}} onClick={() => setLightbox({ src: livre.couverture || '', zoom: 1 })} />
                 ) : (
                   <div className="book-cover-placeholder">
                     <span>📖</span>
@@ -136,7 +144,7 @@ export default function Home() {
       <section className="about-section" id="apropos">
         <div className="about-inner">
           {AUTEUR.photo ? (
-            <img src={AUTEUR.photo} alt="Aurore Michaud" className="about-photo" />
+            <img src={AUTEUR.photo} alt="Aurore Michaud" className="about-photo" style={{cursor:'zoom-in'}} onClick={() => setLightbox({ src: AUTEUR.photo, zoom: 1 })} />
           ) : (
             <div className="about-photo-placeholder">
               <span>📷</span>
@@ -159,7 +167,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ESPACE CRÉATEURS */}
       {createursActifs.length > 0 && (
         <section className="createurs-section">
           <div className="section-header" style={{maxWidth: '1100px', margin: '0 auto', padding: '0 2rem'}}>
@@ -179,14 +186,12 @@ export default function Home() {
         </section>
       )}
 
-      {/* QUOTE */}
       <section className="quote-section">
         <span className="q-mark">"</span>
         <p className="q-text">Chaque livre est un voyage… chaque page, une rencontre… chaque mot, une liberté.</p>
         <p className="q-by">— Aurore Michaud</p>
       </section>
 
-      {/* CTA FINAL */}
       <section className="cta-section">
         <p className="cta-eyebrow">✦ commander ✦</p>
         <h2 className="cta-title">Laissez parler votre âme.</h2>
@@ -200,6 +205,9 @@ export default function Home() {
       <footer className="footer">
         <p>© {new Date().getFullYear()} Aurore Michaud — Tous droits réservés</p>
         <div className="footer-links">
+          <a href={`mailto:${AUTEUR.email}`}>✉️ {AUTEUR.email}</a>
+          <a href={AUTEUR.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+          {AUTEUR.instagram && <a href={AUTEUR.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
           <Link href="/mentions-legales">Mentions légales</Link>
           <Link href="/cgv">CGV</Link>
           <Link href="/admin">Admin</Link>
@@ -208,5 +216,3 @@ export default function Home() {
     </>
   )
 }
-
-

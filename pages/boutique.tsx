@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { LIVRES, TRANSPORTEURS, BOUTIQUE } from '../lib/config'
+import { LIVRES, TRANSPORTEURS, BOUTIQUE, AUTEUR } from '../lib/config'
 
 type Panier = { livreId: string; quantite: number }[]
 
 export default function Boutique() {
   const router = useRouter()
   const [panier, setPanier] = useState<Panier>([])
+  const [lightbox, setLightbox] = useState<{src: string, zoom: number} | null>(null)
   const [etape, setEtape] = useState<'boutique' | 'panier' | 'livraison' | 'paiement' | 'confirmation'>('boutique')
   const [transporteur, setTransporteur] = useState('')
   const [form, setForm] = useState({ nom: '', prenom: '', email: '', telephone: '', adresse: '', ville: '', cp: '', pays: 'France', message: '' })
@@ -88,8 +89,6 @@ export default function Boutique() {
         <title>Boutique — Les livres d'Aurore Michaud | Commande directe</title>
         <meta name="description" content="Commandez les livres d'Aurore Michaud en direct : romans intenses et contes poétiques. Livraison en France et à l'international, dédicace personnalisée possible." />
         <link rel="canonical" href="https://auroremichaud.com/boutique" />
-
-        {/* Open Graph (Facebook) */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://auroremichaud.com/boutique" />
         <meta property="og:title" content="Boutique — Les livres d'Aurore Michaud" />
@@ -99,14 +98,10 @@ export default function Boutique() {
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Aurore Michaud" />
-
-        {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Boutique — Les livres d'Aurore Michaud" />
         <meta name="twitter:description" content="Commandez en direct, avec dédicace personnalisée possible." />
         <meta name="twitter:image" content="https://auroremichaud.com/og-banner.png" />
-
-        {/* Données structurées Google : les livres avec leur prix */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -134,9 +129,23 @@ export default function Boutique() {
             }))
           }) }}
         />
-
         <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
       </Head>
+
+      {/* LIGHTBOX */}
+      {lightbox && (
+        <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div onClick={e => e.stopPropagation()} style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+<img src={lightbox.src} style={{ maxHeight: '70vh', maxWidth: '80vw', transform: `scale(${lightbox.zoom})`, transformOrigin: 'center', transition: 'transform 0.2s', borderRadius: '4px', display: 'block' }} />
+<div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', position: 'relative', zIndex: 10 }}>
+              <button onClick={() => setLightbox({ ...lightbox, zoom: Math.max(0.5, lightbox.zoom - 0.25) })} style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', width: '36px', height: '36px', fontSize: '1.2rem', cursor: 'pointer', borderRadius: '50%' }}>−</button>
+              <span style={{ color: '#fff', fontSize: '0.8rem', minWidth: '40px', textAlign: 'center' }}>{Math.round(lightbox.zoom * 100)}%</span>
+              <button onClick={() => setLightbox({ ...lightbox, zoom: Math.min(6, lightbox.zoom + 0.25) })} style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', width: '36px', height: '36px', fontSize: '1.2rem', cursor: 'pointer', borderRadius: '50%' }}>+</button>
+            </div>
+            <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: '-2.5rem', right: 0, background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}>✕</button>
+          </div>
+        </div>
+      )}
 
       <nav className="nav">
         <Link href="/" className="nav-logo">Aurore Michaud</Link>
@@ -150,7 +159,6 @@ export default function Boutique() {
 
       <div className="boutique-container">
 
-        {/* ÉTAPE INDICATEUR */}
         {etape !== 'boutique' && etape !== 'confirmation' && (
           <div className="etapes">
             {['panier', 'livraison', 'paiement'].map((e, i) => (
@@ -162,7 +170,6 @@ export default function Boutique() {
           </div>
         )}
 
-        {/* ========== BOUTIQUE ========== */}
         {etape === 'boutique' && (
           <div className="shop-grid">
             <div>
@@ -174,7 +181,7 @@ export default function Boutique() {
               {LIVRES.map(livre => (
                 <div key={livre.id} className="livre-card">
                   <div className="livre-card-img">
-                    <div className="livre-cover-sm">📖</div>
+                    <img src={livre.couverture} alt={`Couverture de ${livre.titre}`} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px', cursor: 'zoom-in' }} onClick={() => setLightbox({ src: livre.couverture || '', zoom: 1 })} />
                     {livre.nouveaute && <span className="badge-new">Nouveauté</span>}
                   </div>
                   <div className="livre-card-body">
@@ -201,7 +208,6 @@ export default function Boutique() {
           </div>
         )}
 
-        {/* ========== PANIER ========== */}
         {etape === 'panier' && (
           <div className="checkout-layout">
             <div className="checkout-main">
@@ -218,7 +224,7 @@ export default function Boutique() {
                     if (!livre) return null
                     return (
                       <div key={item.livreId} className="cart-item">
-                        <div className="cart-item-cover">📖</div>
+                        <img src={livre.couverture} alt={livre.titre} style={{ width: '60px', height: 'auto', display: 'block', borderRadius: '3px' }} />
                         <div className="cart-item-body">
                           <p className="cart-item-cat">{livre.sousTitre}</p>
                           <p className="cart-item-title">{livre.titre}</p>
@@ -254,7 +260,6 @@ export default function Boutique() {
           </div>
         )}
 
-        {/* ========== LIVRAISON ========== */}
         {etape === 'livraison' && (
           <div className="checkout-layout">
             <div className="checkout-main">
@@ -283,9 +288,7 @@ export default function Boutique() {
               </div>
               <div className="nav-btns">
                 <button onClick={() => setEtape('panier')} className="btn-outline">← Retour</button>
-                <button onClick={() => setEtape('paiement')} className="btn-dark" disabled={!transporteur}>
-                  Continuer →
-                </button>
+                <button onClick={() => setEtape('paiement')} className="btn-dark" disabled={!transporteur}>Continuer →</button>
               </div>
             </div>
             <div className="checkout-summary">
@@ -301,7 +304,6 @@ export default function Boutique() {
           </div>
         )}
 
-        {/* ========== PAIEMENT / COORDONNÉES ========== */}
         {etape === 'paiement' && (
           <div className="checkout-layout">
             <div className="checkout-main">
@@ -327,7 +329,6 @@ export default function Boutique() {
                 </div>
                 <div className="form-field full"><label>Message / Dédicace (optionnel)</label><textarea value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Souhaitez-vous une dédicace personnalisée ? Un message particulier ?" rows={3} /></div>
               </div>
-
               <div className="paiement-info">
                 <h3>💳 Paiement</h3>
                 <p>Le paiement s'effectue par virement bancaire ou PayPal après validation de la commande. Vous recevrez les instructions par email.</p>
@@ -337,18 +338,12 @@ export default function Boutique() {
                   <span className="paiement-badge">🤝 En main propre</span>
                 </div>
               </div>
-
               <div className="cgv-check">
                 <label><input type="checkbox" required /> J'accepte les <Link href="/cgv">conditions générales de vente</Link> et la <Link href="/mentions-legales">politique de confidentialité</Link></label>
               </div>
-
               <div className="nav-btns">
                 <button onClick={() => setEtape('livraison')} className="btn-outline">← Retour</button>
-                <button
-                  onClick={passerCommande}
-                  className="btn-dark"
-                  disabled={loading || !form.nom || !form.prenom || !form.email || !form.adresse || !form.ville || !form.cp}
-                >
+                <button onClick={passerCommande} className="btn-dark" disabled={loading || !form.nom || !form.prenom || !form.email || !form.adresse || !form.ville || !form.cp}>
                   {loading ? 'Envoi en cours...' : `Valider la commande — ${total.toFixed(2).replace('.', ',')} €`}
                 </button>
               </div>
@@ -369,7 +364,6 @@ export default function Boutique() {
           </div>
         )}
 
-        {/* ========== CONFIRMATION ========== */}
         {etape === 'confirmation' && (
           <div className="confirmation">
             <div className="confirmation-icon">✅</div>
@@ -387,6 +381,9 @@ export default function Boutique() {
       <footer className="footer">
         <p>© {new Date().getFullYear()} Aurore Michaud</p>
         <div className="footer-links">
+          <a href={`mailto:${AUTEUR.email}`}>✉️ {AUTEUR.email}</a>
+          <a href={AUTEUR.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+          {AUTEUR.instagram && <a href={AUTEUR.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
           <Link href="/mentions-legales">Mentions légales</Link>
           <Link href="/cgv">CGV</Link>
         </div>
