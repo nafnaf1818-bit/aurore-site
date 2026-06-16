@@ -140,6 +140,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--creme); color: var(
 
 @media (max-width: 430px) {
   .nav { padding: 1rem 1.2rem; }
+  .nav-logo { font-size: 1.45rem; }
   .nav-links { gap: 0.7rem; flex-wrap: wrap; justify-content: flex-end; }
   .hero { padding: 2rem 1.2rem 2rem; }
   .hero-script { font-size: 2.6rem; }
