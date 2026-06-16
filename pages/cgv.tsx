@@ -14,6 +14,8 @@ export default function CGV() {
         <meta property="og:title" content="CGV — Aurore Michaud" />
         <meta property="og:description" content="Conditions générales de vente — les livres d'Aurore Michaud sont vendus via la plateforme Coollibri." />
         <meta property="og:image" content="https://auroremichaud.com/og-banner.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Aurore Michaud" />
       </Head>

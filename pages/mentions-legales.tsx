@@ -13,6 +13,8 @@ export default function Mentions() {
         <meta property="og:title" content="Mentions légales — Aurore Michaud" />
         <meta property="og:description" content="Mentions légales du site auroremichaud.com." />
         <meta property="og:image" content="https://auroremichaud.com/og-banner.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Aurore Michaud" />
       </Head>

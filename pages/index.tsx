@@ -62,8 +62,8 @@ export default function Home() {
         <span className="nav-logo">Aurore Michaud</span>
         <ul className="nav-links">
           <li><a href="#livres">Livres</a></li>
-          <li><a href="#apropos">À propos</a></li>
-          <li><a href={AUTEUR.facebook} target="_blank" rel="noreferrer">Facebook</a></li>
+          <li className="nav-hide-mobile"><a href="#apropos">À propos</a></li>
+          <li className="nav-hide-mobile"><a href={AUTEUR.facebook} target="_blank" rel="noreferrer">Facebook</a></li>
           <li><Link href="/boutique" className="nav-cta">Boutique</Link></li>
         </ul>
       </nav>

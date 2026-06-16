@@ -134,6 +134,10 @@ body { font-family: 'Raleway', sans-serif; background: var(--creme); color: var(
   .nav-links { gap: 1rem; }
 }
 
+@media (max-width: 600px) {
+  .nav-hide-mobile { display: none; }
+}
+
 @media (max-width: 430px) {
   .nav { padding: 1rem 1.2rem; }
   .nav-links { gap: 0.7rem; flex-wrap: wrap; justify-content: flex-end; }
