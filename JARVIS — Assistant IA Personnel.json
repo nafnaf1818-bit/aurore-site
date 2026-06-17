@@ -1,0 +1,480 @@
+{
+  "name": "JARVIS — Assistant IA Personnel",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "jarvis",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a6bb778e-ce44-4cc6-9192-fe8963809bdd",
+      "name": "Webhook JARVIS",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        -112
+      ],
+      "webhookId": "ee99e55d-d94a-45eb-8c81-beb788bf1a58"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Tu es JARVIS, un assistant personnel IA. Tu dois TOUJOURS répondre en JSON pur, sans aucun texte autour, sans balises markdown, sans explication.\n\nStructure JSON OBLIGATOIRE :\n{ \"tasks\": [{\"title\": \"...\", \"subtitle\": \"...\", \"urgency\": \"urgent\", \"icon\": \"flame\"}], \"mails\": [{\"from\": \"...\", \"subject\": \"...\", \"source\": \"gmail\", \"draft\": \"...\"}], \"agenda\": [{\"time\": \"HH:mm\", \"title\": \"...\", \"subtitle\": \"...\"}] }\n\nurgency doit valoir: urgent, today ou week.\nicon doit valoir: flame, calendar ou mail.\n\nInstructions:\n1. Utilise les outils Lire les Emails et Lire Emails ikmail (IMAP) pour récupérer les emails non lus de toutes tes boîtes\n2. Utilise l'outil Agenda Aujourd'hui pour récupérer les événements du jour\n3. Construis une to-do classée par urgence\n4. Pour chaque email important, génère un brouillon de réponse court dans le champ draft\n5. Retourne UNIQUEMENT le JSON, rien d'autre.\n\nDemande de l'utilisateur: {{ $('Webhook JARVIS').item.json.body.message }}",
+        "options": {
+          "systemMessage": "You are JARVIS, an intelligent personal AI assistant with access to Gmail, IMAP email (ikmail), and Google Calendar.\n\nAvailable tools:\n- Lire les Emails: Fetch unread emails from the Gmail inbox\n- Lire Emails ikmail (IMAP): Fetch unread emails from aurore.michaud@ikmail.com via IMAP\n- Créer Brouillon Gmail: Create a draft email (needs: subject, message, to)\n- Envoyer Email Gmail: Send an email immediately (needs: to, subject, message)\n- Agenda Aujourd'hui: Get today's events from Google Calendar\n\nBe concise, proactive and helpful. Respond in the same language as the user.",
+          "maxIterations": 10
+        }
+      },
+      "id": "602dbd38-8964-4461-ad2b-84684c1f0faa",
+      "name": "Agent JARVIS",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        400,
+        -112
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "a82ee38e-ab80-4d4b-9f09-63595accb747",
+      "name": "GPT-4o-mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        112
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "8NQ9KIOsDZbnRycA",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $(\"Webhook JARVIS\").item.json.body?.sessionId ?? $execution.id }}",
+        "contextWindowLength": 10
+      },
+      "id": "47fef83c-37aa-4b77-954b-df97da163acb",
+      "name": "Mémoire Buffer JARVIS",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        128,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "cc317662-ce96-4813-abfd-c377c178b649",
+      "name": "Lire les Emails",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        112
+      ],
+      "webhookId": "3e2a4c17-c01d-4907-8f22-504a089bf974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7YxMoNmx8Tr8lyiB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('subject', 'Email subject') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message', 'Email body content') }}",
+        "options": {
+          "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('to', 'Recipient email address') }}"
+        }
+      },
+      "id": "16aae4a5-d557-4cf5-afd8-ffce0e201568",
+      "name": "Créer Brouillon Gmail",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        112
+      ],
+      "webhookId": "9cf272d1-a03c-4ae0-a746-22a0f39ada7b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3TOLQpv9a3vp5dMy",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('to', 'Recipient email address') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('subject', 'Email subject') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message', 'Email body content') }}",
+        "options": {}
+      },
+      "id": "7b9cafbd-c5c1-4757-b9e0-12d94a9cd9c3",
+      "name": "Envoyer Email Gmail",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        112
+      ],
+      "webhookId": "fffbd0cb-cc81-429b-8333-1311f0a38989",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3TOLQpv9a3vp5dMy",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "nafnaf1818@gmail.com",
+          "cachedResultName": "nafnaf1818@gmail.com"
+        },
+        "limit": 20,
+        "timeMin": "={{ $today.toISO() }}",
+        "timeMax": "={{ $today.endOf(\"day\").toISO() }}",
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "id": "11450dcc-0f51-4919-b4b3-09d83c6d664b",
+      "name": "Agenda Aujourd'hui",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1440,
+        112
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "NM7aVomQaBOf4ygp",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, data: $json.output }) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "0adcc557-2e69-45bd-af37-d36e9fcada9f",
+      "name": "Répondre au Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        752,
+        -112
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "d0d64f96-3dbb-4d3b-8957-af829a95cfa9",
+      "name": "Lire les Emails1",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        112
+      ],
+      "webhookId": "3e2a4c17-c01d-4907-8f22-504a089bf974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2nQ92QUYfuDRQ9t6",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "30fe4ef7-f6e2-4e2b-b386-2dc17fda78b2",
+      "name": "Lire les Emails2",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        112
+      ],
+      "webhookId": "3e2a4c17-c01d-4907-8f22-504a089bf974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KJpBO4eI5UyH0LTp",
+          "name": "Gmail account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "e3f0d270-dbae-4238-84c6-481d4a5b874c",
+      "name": "Lire les Emails3",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        112
+      ],
+      "webhookId": "3e2a4c17-c01d-4907-8f22-504a089bf974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iKQROqhBySaDCVue",
+          "name": "Gmail account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        112
+      ],
+      "id": "8a14fefb-aef2-48f9-ab5c-7c865e224892",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "Q1X6AchymWvtbyd9",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "lire_emails_ikmail",
+        "description": "Fetch unread emails from aurore.michaud@ikmail.com via IMAP.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "sAWbloz3F1tIXzDI"
+        },
+        "specifyInputSchema": false,
+        "workflowValues": {}
+      },
+      "id": "b8f2d1a4-5c3e-4f9b-8d6a-1e7f0c2b3d5e",
+      "name": "Lire Emails ikmail (IMAP)",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        608,
+        112
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook JARVIS": {
+      "main": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent JARVIS": {
+      "main": [
+        [
+          {
+            "node": "Répondre au Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mémoire Buffer JARVIS": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les Emails": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer Brouillon Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer Email Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agenda Aujourd'hui": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les Emails3": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les Emails2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les Emails1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Répondre au Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire Emails ikmail (IMAP)": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent JARVIS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5e458df9-fe98-4bab-bd40-e41e7c561350",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cf967131453e52bf8336f19def1da4eee4b1a15e264367a3afe2d9d1cf0d6962"
+  },
+  "nodeGroups": [],
+  "id": "RP2WysdC0HOhG7q0",
+  "tags": []
+}
